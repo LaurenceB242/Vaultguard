@@ -49,7 +49,7 @@ Le projet est encore au stade de prototype : le chiffrement et l’analyse de ro
 ## Technologies utilisées
 
 - **PHP 8.3**
-- **Symfony 7.4** : framework web, formulaires, sécurité, validation, sessions et envoi d’e-mails.
+- **SymfonyLTS 7.4.21** : framework web, formulaires, sécurité, validation, sessions et envoi d’e-mails.
 - **Twig** : moteur de templates.
 - **Doctrine ORM et Doctrine Migrations** : persistance et évolution du schéma de données.
 - **MySQL 8** : base de données prévue par la configuration Docker Compose.
