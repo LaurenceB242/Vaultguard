@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<div class="container text-center mt-5">
+    <div class="p-5 mb-4 bg-light rounded-3 shadow-sm border">
+        <h1 class="display-4 fw-bold text-dark">VaultGuard 🛡️</h1>
+        <p class="col-md-8 fs-4 mx-auto text-muted mt-3">
+            Votre gestionnaire de mots de passe haute sécurité. Chiffrez, analysez la robustesse de vos codes et protégez vos accès en toute sérénité.
+        </p>
+        
+        <div class="mt-5">
+            <a href="{{ path('app_vault') }}" class="btn btn-primary btn-lg me-2 px-4">Accéder au Coffre-fort</a>
+            <a href="{{ path('app_forgot_password_request') }}" class="btn btn-outline-secondary btn-lg px-4">Mot de passe oublié</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
