@@ -1,0 +1,12 @@
+services:
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: vaultguard
+      MYSQL_USER: vault
+      MYSQL_PASSWORD: vault
+      MYSQL_ROOT_PASSWORD: root
+    ports: ["3307:3306"]
+  mailpit:
+    image: axllent/mailpit
+    ports: ["1025:1025", "8025:8025"]
