@@ -2,7 +2,7 @@
 
 VaultGuard est un projet Symfony en cours de développement autour de la gestion de mots de passe. Il vise à permettre à chaque utilisateur de conserver ses identifiants de services dans un coffre personnel, avec des fonctionnalités de compte et de récupération d’accès.
 
-Ce projet est réalisé dans le cadre de mon apprentissage, avec un accompagnement ponctuel de Gemini et de Claude.
+Ce projet est réalisé dans le cadre de mon apprentissage, avec un accompagnement en partie de Gemini et de Claude.
 
 ## Fonctionnalités présentes
 
@@ -49,7 +49,7 @@ Le projet est encore au stade de prototype : le chiffrement et l’analyse de ro
 ## Technologies utilisées
 
 - **PHP 8.3**
-- **Symfony 8.3** : framework web, formulaires, sécurité, validation, sessions et envoi d’e-mails.
+- **Symfony 7.4** : framework web, formulaires, sécurité, validation, sessions et envoi d’e-mails.
 - **Twig** : moteur de templates.
 - **Doctrine ORM et Doctrine Migrations** : persistance et évolution du schéma de données.
 - **MySQL 8** : base de données prévue par la configuration Docker Compose.

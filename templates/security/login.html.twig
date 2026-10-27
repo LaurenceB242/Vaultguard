@@ -1,34 +1,166 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Log in!{% endblock %}
+{% block title %}VaultGuard - Connexion{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
+<style>
+    body {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+    }
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ logout_path() }}">Logout</a>
+    .auth-card {
+        background: rgba(30, 41, 59, 0.75);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        width: 100%;
+        max-width: 420px;
+        padding: 2.5rem;
+        color: #f8fafc;
+    }
+
+    .brand-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 1.5rem auto;
+        box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
+    }
+
+    /* Correction de l'alignement des champs avec icônes */
+    .input-group {
+        position: relative;
+        display: flex;
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .input-group-text {
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-right: none;
+        color: #94a3b8;
+        padding: 0.75rem 1rem;
+        border-top-left-radius: 12px;
+        border-bottom-left-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .form-control {
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 12px;
+        color: #fff;
+        padding: 0.75rem 1rem;
+        transition: all 0.3s ease;
+        flex: 1 1 auto;
+    }
+
+    /* Ajustement des bordures quand il y a un input-group */
+    .input-group .form-control {
+        border-left: none;
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+        border-top-right-radius: 12px;
+        border-bottom-right-radius: 12px;
+    }
+
+    .form-control:focus {
+        background: rgba(15, 23, 42, 0.9);
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
+        color: #fff;
+        z-index: 2;
+    }
+
+    .form-control::placeholder {
+        color: #94a3b8;
+    }
+
+    .btn-custom {
+        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        border: none;
+        border-radius: 12px;
+        padding: 0.8rem;
+        font-weight: 600;
+        font-size: 1rem;
+        letter-spacing: 0.5px;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        color: white;
+    }
+
+    .btn-custom:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+        color: white;
+    }
+
+    .link-custom {
+        color: #60a5fa;
+        text-decoration: none;
+        transition: color 0.2s ease;
+    }
+
+    .link-custom:hover {
+        color: #93c5fd;
+        text-decoration: underline;
+    }
+</style>
+
+<div class="auth-card">
+    <div class="text-center">
+        <div class="brand-icon">
+            <i class="bi bi-shield-lock-fill fs-2 text-white"></i>
         </div>
-    {% endif %}
-
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-    <input type="hidden" name="_csrf_token" data-controller="csrf-protection" value="{{ csrf_token('authenticate') }}">
-
-    <div class="checkbox mb-3">
-        <label>
-            <input type="checkbox" name="_remember_me"> Remember me
-        </label>
+        <h3 class="fw-bold mb-1">VaultGuard</h3>
+        <p class="text-secondary small mb-4">Accédez à votre coffre-fort sécurisé</p>
     </div>
 
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
+    {% if error %}
+        <div class="alert alert-danger border-0 rounded-3 py-2 px-3 mb-3 small" role="alert">
+            <i class="bi bi-exclamation-triangle-fill me-2"></i> {{ error.messageKey|trans(error.messageData, 'security') }}
+        </div>
+    {% endif %}
+    <form method="post">
+        <!-- Si tu as des erreurs de connexion -->
+        {% if error %}
+            <div class="alert alert-danger mb-3">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+        {% endif %}
+
+        <div class="mb-3">
+            <label for="inputEmail" class="form-label small text-secondary fw-semibold">ADRESSE EMAIL</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-envelope"></i></span>
+                <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="nom@exemple.com" required autofocus>
+            </div>
+        </div>
+
+        <div class="mb-4">
+            <label for="inputPassword" class="form-label small text-secondary fw-semibold">MOT DE PASSE</label>
+            <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-key"></i></span>
+                <input type="password" name="password" id="inputPassword" class="form-control" placeholder="••••••••" required>
+            </div>
+        </div>
+
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+        <button class="btn btn-primary btn-custom w-100 mb-3" type="submit">
+            Se connecter <i class="bi bi-arrow-right-short ms-1"></i>
+        </button>
+    </form>
+</div>
 {% endblock %}

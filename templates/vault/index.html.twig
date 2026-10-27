@@ -3,99 +3,267 @@
 {% block title %}VaultGuard - Mon Coffre-Fort{% endblock %}
 
 {% block body %}
-<div class="container py-5">
-    <!-- En-tête de la page -->
-    <div class="row mb-4 align-items-center">
-        <div class="col">
-            <h1 class="h3 fw-bold text-dark">
-                <i class="bi bi-shield-lock-fill text-primary"></i> Mon Coffre-Fort VaultGuard
-            </h1>
-            <p class="text-muted">Gère tes identifiants et mots de passe en toute sécurité.</p>
+<style>
+    body {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        min-height: 100vh;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        color: #f8fafc;
+        margin: 0;
+        padding-bottom: 3rem;
+    }
+
+    /* Navbar / Header haut de page */
+    .dashboard-header {
+        background: rgba(30, 41, 59, 0.75);
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        padding: 1rem 2rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+
+    .brand-logo {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-weight: bold;
+        font-size: 1.25rem;
+        color: #fff;
+        text-decoration: none;
+    }
+
+    .brand-logo-icon {
+        width: 40px;
+        height: 40px;
+        background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+    }
+
+    /* Cartes de contenu (Glassmorphism) */
+    .glass-card {
+        background: rgba(30, 41, 59, 0.7);
+        backdrop-filter: blur(12px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        padding: 2rem;
+        color: #f8fafc;
+        margin-bottom: 2rem;
+    }
+
+    /* Formulaires et champs */
+    .form-control, .form-select {
+        background: rgba(15, 23, 42, 0.6);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 12px;
+        color: #fff;
+        padding: 0.75rem 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .form-control:focus, .form-select:focus {
+        background: rgba(15, 23, 42, 0.9);
+        border-color: #3b82f6;
+        box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.25);
+        color: #fff;
+    }
+
+    .form-control::placeholder {
+        color: #94a3b8;
+    }
+
+    .form-label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: #94a3b8;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+
+    /* Boutons personnalisés */
+    .btn-custom {
+        background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+        border: none;
+        border-radius: 12px;
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+        color: white;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .btn-custom:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+        color: white;
+    }
+
+    .btn-outline-custom {
+        background: transparent;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 12px;
+        color: #f8fafc;
+        padding: 0.75rem 1.25rem;
+        font-weight: 600;
+        transition: all 0.2s ease;
+    }
+
+    .btn-outline-custom:hover {
+        background: rgba(255, 255, 255, 0.05);
+        border-color: #3b82f6;
+        color: #fff;
+    }
+
+    /* Tableau des identifiants enregistrés */
+    .table-custom {
+        color: #f8fafc;
+        background: transparent;
+    }
+
+    .table-custom th {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        color: #94a3b8;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.75rem;
+        letter-spacing: 0.5px;
+        padding: 1rem;
+    }
+
+    .table-custom td {
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        padding: 1rem;
+        vertical-align: middle;
+    }
+
+    .badge-secure {
+        background: rgba(16, 185, 129, 0.15);
+        color: #34d399;
+        border: 1px solid rgba(16, 185, 129, 0.3);
+        padding: 0.35rem 0.75rem;
+        border-radius: 50rem;
+        font-size: 0.75rem;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+    }
+</style>
+
+<!-- Barre de navigation supérieure -->
+<div class="dashboard-header">
+    <a href="#" class="brand-logo">
+        <div class="brand-logo-icon">
+            <i class="bi bi-shield-lock-fill text-white"></i>
         </div>
-        <div class="col-auto">
-            <span class="badge bg-success px-3 py-2 fs-6">
-                <i class="bi bi-lock-fill"></i> Session Sécurisée
-            </span>
+        VaultGuard
+    </a>
+    <div>
+        <span class="text-secondary small me-3"><i class="bi bi-lock-fill text-success me-1"></i> Session Sécurisée</span>
+        <!-- Adapte la route de déconnexion selon ton application (ex: path('app_logout')) -->
+        <a href="{{ path('app_logout') }}" class="btn btn-outline-custom btn-sm">
+            <i class="bi bi-box-arrow-right me-1"></i> Déconnexion
+        </a>
+    </div>
+</div>
+
+<div class="container">
+    <!-- En-tête de bienvenue -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h2 class="fw-bold mb-1">Mon Coffre-Fort</h2>
+            <p class="text-secondary">Gère tes identifiants et mots de passe en toute sécurité.</p>
         </div>
     </div>
 
-    <!-- Messages flash -->
-    {% for message in app.flashes('success') %}
-        <div class="alert alert-success alert-dismissible fade show shadow-sm" role="alert">
-            <i class="bi bi-check-circle-fill me-2"></i> {{ message }}
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    {% endfor %}
-
     <div class="row g-4">
-        <!-- Formulaire d'ajout (Carte à gauche) -->
+        <!-- Formulaire d'ajout d'identifiant -->
         <div class="col-lg-5">
-            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
-                <div class="card-header bg-dark text-white p-4">
-                    <h5 class="mb-0 fw-semibold">
-                        <i class="bi bi-plus-circle me-2"></i> Ajouter un identifiant
-                    </h5>
-                </div>
-                <div class="card-body p-4 bg-light">
-                    {{ form_start(form, {'attr': {'class': 'needs-validation'}}) }}
-                        <div class="mb-3">
-                            {{ form_row(form.title, {'attr': {'class': 'form-control rounded-3', 'placeholder': 'ex: Email Pro, GitHub...'}}) }}
+            <div class="glass-card h-100">
+                <h5 class="fw-bold mb-4 d-flex align-items-center gap-2">
+                    <i class="bi bi-plus-circle text-primary"></i> Ajouter un identifiant
+                </h5>
+
+                <!-- Tu peux remplacer ceci par ton formulaire Symfony form_start(form) si tu en utilises un -->
+                <form>
+                    <div class="mb-3">
+                        <label class="form-label">Nom du service / Site</label>
+                        <input type="text" class="form-control" placeholder="ex: Google, GitHub, Netflix...">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Identifiant / Email</label>
+                        <input type="text" class="form-control" placeholder="Nom d'utilisateur ou email">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Mot de passe</label>
+                        <div class="input-group">
+                            <input type="password" class="form-control" placeholder="Mot de passe sécurisé" id="newPassword">
+                            <button class="btn btn-outline-custom" type="button" id="togglePassword"><i class="bi bi-eye"></i></button>
                         </div>
-                        <div class="mb-3">
-                            {{ form_row(form.login, {'attr': {'class': 'form-control rounded-3', 'placeholder': 'Nom d’utilisateur ou email'}}) }}
-                        </div>
-                        <div class="mb-3">
-                            {{ form_row(form.encryptedPassword, {'attr': {'class': 'form-control rounded-3', 'placeholder': 'Mot de passe sécurisé'}}) }}
-                        </div>
-                        <button type="button" class="btn btn-outline-secondary btn-sm mb-3 w-100 rounded-3">
-                            <i class="bi bi-key"></i> Générer un mot de passe fort
+                    </div>
+
+                    <div class="mb-4">
+                        <button type="button" class="btn btn-outline-custom w-100 btn-sm mb-2">
+                            <i class="bi bi-key me-1"></i> Générer un mot de passe fort
                         </button>
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-primary rounded-3 py-2 fw-semibold shadow-sm">
-                                Enregistrer dans le coffre
-                            </button>
-                        </div>
-                    {{ form_end(form) }}
-                </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-custom w-100">
+                        <i class="bi bi-check2-circle me-1"></i> Enregistrer dans le coffre
+                    </button>
+                </form>
             </div>
         </div>
 
-        <!-- Liste des éléments enregistrés (À droite) -->
+        <!-- Liste des identifiants enregistrés -->
         <div class="col-lg-7">
-            <div class="card border-0 shadow-sm rounded-4 overflow-hidden">
-                <div class="card-header bg-white p-4 border-bottom">
-                    <h5 class="mb-0 fw-semibold text-dark">
-                        <i class="bi bi-list-nested me-2 text-primary"></i> Tes Identifiants Enregistrés
+            <div class="glass-card h-100">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h5 class="fw-bold mb-0 d-flex align-items-center gap-2">
+                        <i class="bi bi-shield-check text-success"></i> Tes Identifiants Enregistrés
                     </h5>
+                    <span class="badge-secure"><i class="bi bi-shield-fill-check"></i> Chiffré</span>
                 </div>
-                <div class="card-body p-4">
-                    {% if credentials is defined and credentials is not empty %}
-                        <div class="list-group list-group-flush">
-                            {% for credential in credentials %}
-                                <div class="list-group-item px-0 py-3 d-flex justify-content-between align-items-center">
-                                    <div>
-                                        <h6 class="mb-1 fw-bold text-dark">{{ credential.title }}</h6>
-                                        <small class="text-muted"><i class="bi bi-person"></i> {{ credential.login }}</small>
-                                    </div>
-                                    <div class="btn-group">
-                                        <button class="btn btn-sm btn-outline-light text-dark border shadow-sm rounded-start-3" title="Afficher">
-                                            <i class="bi bi-eye"></i>
-                                        </button>
-                                        <button class="btn btn-sm btn-outline-light text-danger border shadow-sm rounded-end-3" title="Supprimer">
-                                            <i class="bi bi-trash"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    {% else %}
-                        <div class="text-center py-5 text-muted">
-                            <i class="bi bi-folder2-open display-4 mb-3 d-block text-secondary"></i>
-                            <p class="mb-0">Ton coffre-fort est vide pour l'instant.</p>
-                            <small>Ajoute ton premier identifiant via le formulaire.</small>
-                        </div>
-                    {% endif %}
+
+                <!-- Si le coffre est vide -->
+                <div class="text-center py-5">
+                    <div class="mb-3">
+                        <i class="bi bi-folder2-open display-4 text-secondary opacity-50"></i>
+                    </div>
+                    <h6 class="text-white fw-semibold">Ton coffre-fort est vide pour l'instant.</h6>
+                    <p class="text-secondary small mb-0">Ajoute ton premier identifiant via le formulaire à gauche.</p>
                 </div>
+
+
+                <div class="table-responsive">
+                    <table class="table table-custom align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Service</th>
+                                <th>Identifiant</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="fw-semibold text-white">GitHub</td>
+                                <td class="text-secondary">mon-email@domaine.com</td>
+                                <td class="text-end">
+                                    <button class="btn btn-sm btn-outline-custom"><i class="bi bi-eye"></i></button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            
             </div>
         </div>
     </div>
