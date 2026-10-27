@@ -8,3 +8,21 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+# Fichiers d'environnement sensibles (contiennent tes mots de passe et clés secrètes)
+/.env.local
+/.env.*.local
+/config/secrets/
+
+# Dépendances PHP et dossiers de travail Symfony
+/vendor/
+/var/
+
+# Fichiers système et IDE
+.DS_Store
+.idea/
+.vscode/
+
+# Fichiers d'environnement
+.env
+.env.*
+!.env.dist
